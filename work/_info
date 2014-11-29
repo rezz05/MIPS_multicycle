@@ -20,7 +20,7 @@ Vb?XemlXUA>G0oDOK3mjBS3
 Z10 OV;C;10.1e;51
 32
 !i10b 1
-Z11 !s108 1417283720.852000
+Z11 !s108 1417285750.199000
 Z12 !s90 -reportprogress|300|MIPS_multicycle.vhd|MIPS_multicycle_tb.vhd|MIPS_package.vhd|Memory.vhd|RegisterFile.vhd|RegisterNbits.vhd|Util_package.vhd|
 Z13 !s107 Util_package.vhd|RegisterNbits.vhd|RegisterFile.vhd|Memory.vhd|MIPS_package.vhd|MIPS_multicycle_tb.vhd|MIPS_multicycle.vhd|
 o-O0
@@ -46,13 +46,13 @@ o-O0
 R14
 Emips_monocycle
 w1417272379
-Z18 DPx4 work 12 mips_package 0 22 kkhf3jIPY6VeleGX4E=:f0
-Z19 DPx4 ieee 11 numeric_std 0 22 O3PF8EB`?j9=z7KT`fn941
+DPx4 work 12 mips_package 0 22 kkhf3jIPY6VeleGX4E=:f0
+Z18 DPx4 ieee 11 numeric_std 0 22 O3PF8EB`?j9=z7KT`fn941
 R3
 R4
 R5
 R6
-Z20 dC:\Engenharia de Computação\Projetos de Sistemas Digitais\Trabalho 2 - Mips Multiciclo\MIPS_Multicycle
+Z19 dC:\Engenharia de Computação\Projetos de Sistemas Digitais\Trabalho 2 - Mips Multiciclo\MIPS_Multicycle
 8MIPS_monocycle.vhd
 FMIPS_monocycle.vhd
 l0
@@ -68,9 +68,9 @@ R14
 !s90 -reportprogress|300|MIPS_monocycle.vhd|
 !s107 MIPS_monocycle.vhd|
 Emips_multicycle
-Z21 w1417274284
+Z20 w1417285554
+Z21 DPx4 work 12 mips_package 0 22 4_>A`SCiz<ofZT`hz@[^b2
 R18
-R19
 R3
 R4
 R5
@@ -91,8 +91,8 @@ R13
 o-O0
 R14
 Abehavioral
+R21
 R18
-R19
 R3
 R4
 R5
@@ -100,8 +100,8 @@ R6
 Z24 DEx4 work 15 mips_multicycle 0 22 eK2j`QmgDZF;cGdfSMDE;1
 l60
 L28
-Z25 V1^gIH=nDSVZYRi4aMWa5L0
-Z26 !s100 kTmi@Q]Ke@iod`PQb^EfM1
+Z25 VUG5n4BHebMQNKgiRRA?T^0
+Z26 !s100 kGf<Za9ZP[I@dEc9J<hPo3
 R10
 32
 !i10b 1
@@ -111,8 +111,8 @@ R13
 o-O0
 R14
 Emips_multicycle_tb
-Z27 w1417283163
-R18
+Z27 w1417284961
+R21
 R5
 R6
 R7
@@ -133,11 +133,11 @@ R14
 Aarch1
 R2
 R15
-R19
+R18
 R3
 R4
 R24
-R18
+R21
 R5
 R6
 Z30 DEx4 work 18 mips_multicycle_tb 0 22 UlIUf`lnQ9:eFQ[h^9[gY3
@@ -156,14 +156,14 @@ R14
 Pmips_package
 R5
 R6
-w1386954202
+w1417285588
 R7
 8MIPS_package.vhd
 FMIPS_package.vhd
 l0
 L9
-Vkkhf3jIPY6VeleGX4E=:f0
-!s100 FFUfO:f394BbLUDfSGmGK3
+V4_>A`SCiz<ofZT`hz@[^b2
+!s100 mlWz5?_6g5M=`AmE?AiRj3
 R10
 32
 !i10b 1

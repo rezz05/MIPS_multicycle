@@ -70,6 +70,7 @@ begin
 	   						ADDI	when opcode = "001000" else
 	   						ORI		when opcode = "001101" else
 	   						BEQ  	when opcode = "000100" else
+                            BNE     when opcode = "000101" else
                             J    	when opcode = "000010" else
                             INVALID_INSTRUCTION ;	-- Invalid or not implemented instruction
 	        
@@ -119,13 +120,10 @@ begin
       
       
     -- MUX which selects the PC value
-    MUX_PC: inPC <= branchTarget when decodedInstruction = BEQ and zero = '1' else 
-			(incrementedPC(31 downto 28) & instruction(25 downto 0) & "00") when decodedInstruction = J else
-            incrementedPC;
-            
-    
-
-	
+    MUX_PC: inPC <= branchTarget when decodedInstruction = BEQ and zero = '1' else
+                    branchTarget when decodedInstruction = BNE and zero = '0' else
+			        (incrementedPC(31 downto 28) & instruction(25 downto 0) & "00") when decodedInstruction = J else
+                    incrementedPC;
 	
 	
     -------------------------------
@@ -167,12 +165,12 @@ begin
     -- Selects the second ALU operand
     -- In R-type instructions or BEQ, the second ALU operand comes from the register file
     -- MUX at the ALU input
-	MUX_ALU: ALUoperand2 <=  readData2 when opcode = "000000" or decodedInstruction = BEQ else offset32bits;
+	MUX_ALU: ALUoperand2 <=  readData2 when opcode = "000000" or decodedInstruction = BEQ or decodedInstruction = BNE else offset32bits;
     
     ---------------------
     -- Behavioural ALU --
     ---------------------
-    result <=	ALUoperand1 - ALUoperand2 when decodedInstruction = SUB or decodedInstruction = BEQ else
+    result <=	ALUoperand1 - ALUoperand2 when decodedInstruction = SUB or decodedInstruction = BEQ or decodedInstruction = BNE else
 				ALUoperand1 and ALUoperand2	when decodedInstruction = AAND 	else 
 				ALUoperand1 or  ALUoperand2	when decodedInstruction = OOR or decodedInstruction = ORI else 
 				(0=>'1', others=>'0') when decodedInstruction = SLT and ALUoperand1 < ALUoperand2 else
