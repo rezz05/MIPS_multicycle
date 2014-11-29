@@ -3,7 +3,7 @@
 0x00000000  0x20040000  addi $4,$0,0x00000000 2    	addi 	$a0, $zero, 0x00000000	# StartAddr
 0x00000004  0x20050008  addi $5,$0,0x00000008 3    	addi 	$a1, $zero, 8		# Size
 0x00000008  0x20060001  addi $6,$0,0x00000000 4    	addi 	$a2, $zero, 0		# UP, 1 crescente, 0 decresente
-0x0000000c  0x20070001  addi $7,$0,0x00000001 5    	addi 	$a3, $zero, 1		# SignedData, 0 unsigned, 1 signed
+0x0000000c  0x20070000  addi $7,$0,0x00000000 5    	addi 	$a3, $zero, 1		# SignedData, 0 unsigned, 1 signed
 0x00000010  0x20080001  addi $8,$0,0x00000001 8    	addi 	$t0, $zero, 1 		# i <= 1
 0x00000014  0x00044820  add $9,$0,$4          9    	add 	$t1, $zero, $a0		# t1 <= a0/startAddr
 0x00000018  0x11050021  beq $8,$5,0x00000021  11   	beq 	$t0, $a1, End_For 	# i < size

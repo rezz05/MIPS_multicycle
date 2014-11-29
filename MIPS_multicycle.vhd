@@ -64,7 +64,8 @@ begin
 	   						SUB   	when opcode = "000000" and funct = "100010" else
 	   						AAND	when opcode = "000000" and funct = "100100" else
 	   						OOR   	when opcode = "000000" and funct = "100101" else
-	   						SLT		when opcode = "000000" and funct = "101010" else
+	   						SLT     when opcode = "000000" and funct = "101010" else
+                            SLTU    when opcode = "000000" and funct = "101011" else
                             SW		when opcode = "101011" else
 	   						LW		when opcode = "100011" else
 	   						ADDI	when opcode = "001000" else
@@ -172,9 +173,11 @@ begin
     ---------------------
     result <=	ALUoperand1 - ALUoperand2 when decodedInstruction = SUB or decodedInstruction = BEQ or decodedInstruction = BNE else
 				ALUoperand1 and ALUoperand2	when decodedInstruction = AAND 	else 
-				ALUoperand1 or  ALUoperand2	when decodedInstruction = OOR or decodedInstruction = ORI else 
-				(0=>'1', others=>'0') when decodedInstruction = SLT and ALUoperand1 < ALUoperand2 else
-				(others=>'0') when decodedInstruction = SLT and not (ALUoperand1 < ALUoperand2) else
+				ALUoperand1 or  ALUoperand2	when decodedInstruction = OOR or decodedInstruction = ORI else
+                (0=>'1', others=>'0') when decodedInstruction = SLTU and ALUoperand1 < ALUoperand2 else
+                (others=>'0') when decodedInstruction = SLTU and not (ALUoperand1 < ALUoperand2) else
+                (0=>'1', others=>'0') when decodedInstruction = SLT and signed(ALUoperand1) < signed(ALUoperand2) else
+                (others=>'0') when decodedInstruction = SLT and not (signed(ALUoperand1) < signed(ALUoperand2)) else
 				ALUoperand1 + ALUoperand2;	-- default for ADD, ADDI, SW, LW   
 
 
