@@ -10,21 +10,21 @@ Z3 DPx4 ieee 15 std_logic_arith 0 22 4`Y?g_lkdn;7UL9IiJck01
 Z4 DPx4 ieee 18 std_logic_unsigned 0 22 RYmj;=TK`k=k>D@Cz`zoB3
 Z5 DPx3 std 6 textio 0 22 5>J:;AW>W0[[dW0I6EN1Q0
 Z6 DPx4 ieee 14 std_logic_1164 0 22 5=aWaoGZSMWIcH0i^f`XF1
-Z7 dC:\Engenharia de Computação\Projetos de Sistemas Digitais\Trabalho 2 - Mips Multiciclo\MIPS_Multicycle
+Z7 dC:\repositories\MIPS_multicycle
 Z8 8Memory.vhd
 Z9 FMemory.vhd
 l0
 L13
 Vb?XemlXUA>G0oDOK3mjBS3
+!s100 oC7IPWM9:]ik8L2:m]EW82
 Z10 OV;C;10.1e;51
 32
-Z11 !s108 1417274211.928000
-Z12 !s90 -reportprogress|300|Util_package.vhd|RegisterNbits.vhd|Memory.vhd|
-Z13 !s107 Memory.vhd|RegisterNbits.vhd|Util_package.vhd|
+!i10b 1
+Z11 !s108 1417283720.852000
+Z12 !s90 -reportprogress|300|MIPS_multicycle.vhd|MIPS_multicycle_tb.vhd|MIPS_package.vhd|Memory.vhd|RegisterFile.vhd|RegisterNbits.vhd|Util_package.vhd|
+Z13 !s107 Util_package.vhd|RegisterNbits.vhd|RegisterFile.vhd|Memory.vhd|MIPS_package.vhd|MIPS_multicycle_tb.vhd|MIPS_multicycle.vhd|
 o-O0
 Z14 tExplicit 1
-!s100 oC7IPWM9:]ik8L2:m]EW82
-!i10b 1
 Abehavioral
 R2
 R3
@@ -34,25 +34,25 @@ R6
 Z15 DEx4 work 6 memory 0 22 b?XemlXUA>G0oDOK3mjBS3
 l121
 L29
-VbIbHk8K]0n:mG;cO?XN?_1
+Z16 VbIbHk8K]0n:mG;cO?XN?_1
+Z17 !s100 LdM;fBlCL243@C:DbD6N52
 R10
 32
+!i10b 1
 R11
 R12
 R13
 o-O0
 R14
-!s100 LdM;fBlCL243@C:DbD6N52
-!i10b 1
 Emips_monocycle
 w1417272379
-Z16 DPx4 work 12 mips_package 0 22 kkhf3jIPY6VeleGX4E=:f0
-Z17 DPx4 ieee 11 numeric_std 0 22 O3PF8EB`?j9=z7KT`fn941
+Z18 DPx4 work 12 mips_package 0 22 kkhf3jIPY6VeleGX4E=:f0
+Z19 DPx4 ieee 11 numeric_std 0 22 O3PF8EB`?j9=z7KT`fn941
 R3
 R4
 R5
 R6
-R7
+Z20 dC:\Engenharia de Computação\Projetos de Sistemas Digitais\Trabalho 2 - Mips Multiciclo\MIPS_Multicycle
 8MIPS_monocycle.vhd
 FMIPS_monocycle.vhd
 l0
@@ -68,31 +68,31 @@ R14
 !s90 -reportprogress|300|MIPS_monocycle.vhd|
 !s107 MIPS_monocycle.vhd|
 Emips_multicycle
-Z18 w1417274284
-R16
-R17
+Z21 w1417274284
+R18
+R19
 R3
 R4
 R5
 R6
 R7
-Z19 8MIPS_multicycle.vhd
-Z20 FMIPS_multicycle.vhd
+Z22 8MIPS_multicycle.vhd
+Z23 FMIPS_multicycle.vhd
 l0
 L12
 VeK2j`QmgDZF;cGdfSMDE;1
+!s100 ZR5UzSg@9S@3VUc]_e6QZ3
 R10
 32
-Z21 !s108 1417275198.967000
-Z22 !s90 -reportprogress|300|MIPS_multicycle.vhd|
-Z23 !s107 MIPS_multicycle.vhd|
+!i10b 1
+R11
+R12
+R13
 o-O0
 R14
-!s100 ZR5UzSg@9S@3VUc]_e6QZ3
-!i10b 1
 Abehavioral
-R16
-R17
+R18
+R19
 R3
 R4
 R5
@@ -100,24 +100,24 @@ R6
 Z24 DEx4 work 15 mips_multicycle 0 22 eK2j`QmgDZF;cGdfSMDE;1
 l60
 L28
-V1^gIH=nDSVZYRi4aMWa5L0
+Z25 V1^gIH=nDSVZYRi4aMWa5L0
+Z26 !s100 kTmi@Q]Ke@iod`PQb^EfM1
 R10
 32
-R21
-R22
-R23
+!i10b 1
+R11
+R12
+R13
 o-O0
 R14
-!s100 kTmi@Q]Ke@iod`PQb^EfM1
-!i10b 1
 Emips_multicycle_tb
-Z25 w1417275189
-R16
+Z27 w1417283163
+R18
 R5
 R6
 R7
-Z26 8MIPS_multicycle_tb.vhd
-Z27 FMIPS_multicycle_tb.vhd
+Z28 8MIPS_multicycle_tb.vhd
+Z29 FMIPS_multicycle_tb.vhd
 l0
 L11
 VUlIUf`lnQ9:eFQ[h^9[gY3
@@ -125,32 +125,32 @@ VUlIUf`lnQ9:eFQ[h^9[gY3
 R10
 32
 !i10b 1
-Z28 !s108 1417275481.296000
-Z29 !s90 -reportprogress|300|MIPS_multicycle_tb.vhd|
-Z30 !s107 MIPS_multicycle_tb.vhd|
+R11
+R12
+R13
 o-O0
 R14
 Aarch1
 R2
 R15
-R17
+R19
 R3
 R4
 R24
-R16
+R18
 R5
 R6
-Z31 DEx4 work 18 mips_multicycle_tb 0 22 UlIUf`lnQ9:eFQ[h^9[gY3
+Z30 DEx4 work 18 mips_multicycle_tb 0 22 UlIUf`lnQ9:eFQ[h^9[gY3
 l22
 L15
-Z32 VH7aT7KX`:aM9[TAX]3CBX3
-Z33 !s100 BkIY9a7DbFTgjJZ:?`H_m2
+Z31 VH7aT7KX`:aM9[TAX]3CBX3
+Z32 !s100 BkIY9a7DbFTgjJZ:?`H_m2
 R10
 32
 !i10b 1
-R28
-R29
-R30
+R11
+R12
+R13
 o-O0
 R14
 Pmips_package
@@ -163,86 +163,144 @@ FMIPS_package.vhd
 l0
 L9
 Vkkhf3jIPY6VeleGX4E=:f0
-R10
-32
-o-O0
-R14
 !s100 FFUfO:f394BbLUDfSGmGK3
-!i10b 1
-!s108 1417274235.949000
-!s90 -reportprogress|300|MIPS_package.vhd|
-!s107 MIPS_package.vhd|
-Eregisternbits
-Z34 w1350351670
-R3
-R5
-R6
-R7
-Z35 8RegisterNbits.vhd
-Z36 FRegisterNbits.vhd
-l0
-L11
-V5mK8=Tl=k[1dSl8;ZoFe62
 R10
 32
+!i10b 1
 R11
 R12
 R13
 o-O0
 R14
-!s100 V;Og]>_inaA9WS=5DNSeC1
+Eregisterfile
+Z33 w1416416197
+R3
+R4
+R5
+R6
+R7
+Z34 8RegisterFile.vhd
+Z35 FRegisterFile.vhd
+l0
+L15
+VO_d8`[9<gZL<ig_L`G8W11
+!s100 =]oWHn<]7a0RB=Rm==<F20
+R10
+32
 !i10b 1
+R11
+R12
+R13
+o-O0
+R14
+Abehavioral
+R3
+R4
+R5
+R6
+Z36 DEx4 work 12 registerfile 0 22 O_d8`[9<gZL<ig_L`G8W11
+l75
+L69
+Z37 VLg6eQi0>OR?eO=4lO^DMj1
+Z38 !s100 A<E@:HP1gP@284]PfL3>^3
+R10
+32
+!i10b 1
+R11
+R12
+R13
+o-O0
+R14
+Astructural
+Z39 DEx4 work 13 registernbits 0 22 5mK8=Tl=k[1dSl8;ZoFe62
+R3
+R4
+R5
+R6
+R36
+l35
+L29
+Z40 VP0=AlReN9FmEbkg?Z>0[O0
+Z41 !s100 8^1dS=@ISCd3`j[zcFWlX1
+R10
+32
+!i10b 1
+R11
+R12
+R13
+o-O0
+R14
+Eregisternbits
+Z42 w1350351670
+R3
+R5
+R6
+R7
+Z43 8RegisterNbits.vhd
+Z44 FRegisterNbits.vhd
+l0
+L11
+V5mK8=Tl=k[1dSl8;ZoFe62
+!s100 V;Og]>_inaA9WS=5DNSeC1
+R10
+32
+!i10b 1
+R11
+R12
+R13
+o-O0
+R14
 Abehavioral
 R3
 R5
 R6
-DEx4 work 13 registernbits 0 22 5mK8=Tl=k[1dSl8;ZoFe62
+R39
 l27
 L26
-V0=cS[i>2IXafQK>BGMY<d1
+Z45 V0=cS[i>2IXafQK>BGMY<d1
+Z46 !s100 HT8fh`hSXA4Q:VKVRd64@3
 R10
 32
+!i10b 1
 R11
 R12
 R13
 o-O0
 R14
-!s100 HT8fh`hSXA4Q:VKVRd64@3
-!i10b 1
 Putil_package
 R5
 R6
-Z37 w1350395976
+Z47 w1350395976
 R7
-Z38 8Util_package.vhd
-Z39 FUtil_package.vhd
+Z48 8Util_package.vhd
+Z49 FUtil_package.vhd
 l0
 L9
 V2hkWjKAV6cYWRWaUKeoB00
+!s100 cPT:l=_cRFKZnR2>W^90N3
 R10
 32
 b1
+!i10b 1
 R11
 R12
 R13
 o-O0
 R14
-!s100 cPT:l=_cRFKZnR2>W^90N3
-!i10b 1
 Bbody
 R2
 R5
 R6
 l0
 L22
-VI^[Q@RGhJjSgg<lDb5zNl2
+Z50 VI^[Q@RGhJjSgg<lDb5zNl2
+Z51 !s100 foU0>ALQz_>^efYdBDSB`3
 R10
 32
+!i10b 1
 R11
 R12
 R13
 o-O0
 R14
 nbody
-!s100 foU0>ALQz_>^efYdBDSB`3
-!i10b 1
