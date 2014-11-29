@@ -1,0 +1,42 @@
+ Address    Code        Basic                     Source
+
+0x00000000  0x20042000  addi $4,$0,0x00002000 2    	addi 	$a0, $zero, 0x00002000	# StartAddr
+0x00000004  0x20050005  addi $5,$0,0x00000005 3    	addi 	$a1, $zero, 5		# Size
+0x00000008  0x20060000  addi $6,$0,0x00000000 4    	addi 	$a2, $zero, 0		# UP, 1 crescente, 0 decresente
+0x0000000c  0x20070001  addi $7,$0,0x00000001 5    	addi 	$a3, $zero, 1		# SignedData, 0 unsigned, 1 signed
+0x00000010  0x20080001  addi $8,$0,0x00000001 8    	addi 	$t0, $zero, 1 		# i <= 1
+0x00000014  0x00044820  add $9,$0,$4          9    	add 	$t1, $zero, $a0		# t1 <= a0/startAddr
+0x00000018  0x11050021  beq $8,$5,0x00000021  11   	beq 	$t0, $a1, End_For 	# i < size
+0x0000001c  0x21290004  addi $9,$9,0x00000004 12   	addi	$t1, $t1, 4		# t1 <= t1 + 4
+0x00000020  0x8d2a0000  lw $10,0x00000000($9) 13   	lw 	$t2, 0($t1)		# t2 <= mem[t1] / t2 == eleito
+0x00000024  0x210bffff  addi $11,$8,0xffffffff14   	addi 	$t3, $t0, -1		# t3 <= t1 - 1 / j - 1
+0x00000028  0x0160082a  slt $1,$11,$0         17   	slt 	$at, $t3, $zero
+0x0000002c  0x14200016  bne $1,$0,0x00000016  18   	bne 	$at, $zero, end_swap	# if j < 0
+0x00000030  0x016b6020  add $12,$11,$11       19   	add 	$t4, $t3, $t3		#
+0x00000034  0x018c6020  add $12,$12,$12       20   	add 	$t4, $t4, $t4		# t4 <=  i * 4
+0x00000038  0x01846020  add $12,$12,$4        21   	add	$t4, $t4, $a0		# t4 <= t4 + a0
+0x0000003c  0x8d8d0000  lw $13,0x00000000($12)22   	lw 	$t5, 0($t4)		# t5 <= mem[j]
+0x00000040  0x14e00007  bne $7,$0,0x00000007  24   	bne	$a3, $zero, signed	# SignedData = 1, jump para comparacoes signed
+0x00000044  0x10c00003  beq $6,$0,0x00000003  27   	beq 	$a2, $zero, u_Decr 	# UP = 0, jump para comparacao decrescente 
+0x00000048  0x014d082b  sltu $1,$10,$13       29   	sltu 	$at, $t2, $t5
+0x0000004c  0x1020000e  beq $1,$0,0x0000000e  30   	beq 	$at, $zero, end_swap	# if eleito < mem[j]
+0x00000050  0x0800001f  j 0x0000007c          31   	j 	end_comp
+0x00000054  0x01aa082b  sltu $1,$13,$10       34   	sltu 	$at, $t5, $t2		
+0x00000058  0x1020000b  beq $1,$0,0x0000000b  35   	beq 	$at, $zero, end_swap	# if eleito > mem[j]
+0x0000005c  0x0800001f  j 0x0000007c          36   	j 	end_comp
+0x00000060  0x10c00003  beq $6,$0,0x00000003  40   	beq 	$a2, $zero, s_Decr 	# UP = 0, jump para comparacao decrescente 
+0x00000064  0x014d082a  slt $1,$10,$13        42   	slt 	$at, $t2, $t5
+0x00000068  0x10200007  beq $1,$0,0x00000007  43   	beq 	$at, $zero, end_swap	# if eleito < mem[j]
+0x0000006c  0x0800001f  j 0x0000007c          44   	j 	end_comp
+0x00000070  0x01aa082a  slt $1,$13,$10        47   	slt 	$at, $t5, $t2		
+0x00000074  0x10200004  beq $1,$0,0x00000004  48   	beq 	$at, $zero, end_swap	# if eleito > mem[j]
+0x00000078  0x0800001f  j 0x0000007c          49   	j 	end_comp
+0x0000007c  0xad8d0004  sw $13,0x00000004($12)52   	sw 	$t5, 4($t4)		# mem[j + 1] <= t5/
+0x00000080  0x216bffff  addi $11,$11,0xfffffff53   	addi 	$t3, $t3, -1		# j--
+0x00000084  0x0800000a  j 0x00000028          54   	j 	for_swap
+0x00000088  0x016b6020  add $12,$11,$11       57   	add 	$t4, $t3, $t3		#
+0x0000008c  0x018c6020  add $12,$12,$12       58   	add 	$t4, $t4, $t4		# t4 <= i * 4
+0x00000090  0x01846020  add $12,$12,$4        59   	add	$t4, $t4, $a0		# t4 <= t4 + a0
+0x00000094  0xad8a0004  sw $10,0x00000004($12)60   	sw 	$t2, 4($t4)		# mem[t4 + 1] <= t2
+0x00000098  0x21080001  addi $8,$8,0x00000001 62   	addi 	$t0, $t0, 1		# i++
+0x0000009c  0x08000006  j 0x00000018          63   	j 	for
