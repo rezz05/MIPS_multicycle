@@ -84,6 +84,8 @@ begin
                         currentState <= S4;
                     elsif decodedInstruction = BEQ or decodedInstruction = BNE then
                         currentState <= S6;
+                    elsif decodedInstruction = J then
+                        currentState <= S8;
                     else
                         currentState <= S9;
                     end if;
@@ -129,6 +131,10 @@ begin
                     registerFile(TO_INTEGER(UNSIGNED(rt))) <= data_i;
                     currentState <= S0;
 
+                when S8 =>
+                    pc <= "000000" & instructionRegister(25 downto 0);
+                    currentState <= S0;
+                    
                 when S9 =>
                     currentState <= S0;
 
