@@ -26,7 +26,7 @@ begin
 	reset <= '1', '0' after 7 ns;
 				
 		
-	MIPS_MONOCYCLE: entity work.MIPS_multicycle(behavioral) 
+	MIPS_MULTICYCLE: entity work.MIPS_multicycle(behavioral) 
 		port map (
 			clk				=> clock,
 			rst				=> reset,

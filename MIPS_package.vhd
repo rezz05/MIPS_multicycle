@@ -10,7 +10,7 @@ package MIPS_package is
         
     -- inst_type defines the instructions decodable by the control unit
     type Instruction_type is  
-            ( ADD, SUB, AAND, OOR, SW, LW, ADDI, ORI, SLT, BEQ, J, BNE, SLTU, INVALID_INSTRUCTION);
+            ( ADD, SW, LW, ADDI, SLT, BEQ, J, BNE, SLTU, INVALID_INSTRUCTION);
  
     type Microinstruction is record
     	RegWrite	: std_logic;    	-- Register file write control

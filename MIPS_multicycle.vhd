@@ -115,7 +115,9 @@ begin
                     currentState <= S0;
 
                 when S6 =>
-                    if (registerFile(TO_INTEGER(UNSIGNED(rs))) - registerFile(TO_INTEGER(UNSIGNED(rt)))) = "000000" then
+                    if decodedInstruction = BEQ and (registerFile(TO_INTEGER(UNSIGNED(rs))) - registerFile(TO_INTEGER(UNSIGNED(rt)))) = "000000" then
+                        pc <= "000000" & instructionRegister(25 downto 0);
+                    elsif decodedInstruction = BNE and (registerFile(TO_INTEGER(UNSIGNED(rs))) - registerFile(TO_INTEGER(UNSIGNED(rt)))) /= "000000" then
                         pc <= "000000" & instructionRegister(25 downto 0);
                     end if;
                     currentState <= S0;
@@ -145,15 +147,11 @@ begin
 
     -- Instruction decoding
     decodedInstruction <=   ADD     when opcode = "000000" and funct = "100000" else
-                            SUB     when opcode = "000000" and funct = "100010" else
-                            AAND    when opcode = "000000" and funct = "100100" else
-                            OOR     when opcode = "000000" and funct = "100101" else
                             SLT     when opcode = "000000" and funct = "101010" else
                             SLTU    when opcode = "000000" and funct = "101011" else
                             SW      when opcode = "101011" else
                             LW      when opcode = "100011" else
                             ADDI    when opcode = "001000" else
-                            ORI     when opcode = "001101" else
                             BEQ     when opcode = "000100" else
                             BNE     when opcode = "000101" else
                             J       when opcode = "000010" else
