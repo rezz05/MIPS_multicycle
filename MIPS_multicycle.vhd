@@ -29,7 +29,7 @@ architecture behavioral of MIPS_multicycle is
 
     signal pc, result   : std_logic_vector(31 downto 0);
     signal RegWrite : std_logic;
-    signal instructionRegister : std_logic_vector(31 downto 0);
+    signal instructionRegister, regA, regB : std_logic_vector(31 downto 0);
 
     type State is (S0, S1, S2, S3, S4, S5, S6, S7, S8, S9, SA, SB);
     signal currentState: State;
@@ -77,19 +77,28 @@ begin
                     instructionRegister <= instruction;
 
                     currentState <= S1;
+
                 when S1 =>
                     if decodedInstruction = ADDI then
-                        currentState <= SA;
+                        currentState <= S2;
+                    elsif decodedInstruction = ADD then
+                        currentState <= S3;
                     else
                         currentState <= S9;
                     end if;
-                when SA =>
+
+                when S2 =>
+                    regB <= x"0000" & IMM;
+                    currentState <= S3;
+
+                when S3 =>
                     if rt /= 0 then
                         registerFile(TO_INTEGER(UNSIGNED(rt))) <= result;
                     end if;
                     currentState <= S0;
                 when S9 =>
                     currentState <= S0;
+
                 when others =>
                     currentState <= S0;
             end case;
@@ -123,9 +132,9 @@ begin
     assert not (decodedInstruction = INVALID_INSTRUCTION and rst = '0')   
     report "******************* INVALID INSTRUCTION *************"
     severity error;
-        
-    result <=   registerFile(TO_INTEGER(UNSIGNED(rs))) + IMM when currentState = SA else
-                registerFile(TO_INTEGER(UNSIGNED(rs))) + registerFile(TO_INTEGER(UNSIGNED(rt)));
+    
+    regA    <= registerFile(TO_INTEGER(UNSIGNED(rs))); -- RegA is always rs
+    result  <= regA + regB;
     
     MemWrite <= '1' when decodedInstruction = SW else '0';
     
