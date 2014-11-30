@@ -79,10 +79,12 @@ begin
                     currentState <= S1;
 
                 when S1 =>
-                    if decodedInstruction = ADDI then
+                    if decodedInstruction = ADDI or decodedInstruction = LW then
                         currentState <= S2;
                     elsif decodedInstruction = ADD then
                         currentState <= S4;
+                    elsif decodedInstruction = BEQ then
+                        currentState <= S6;
                     else
                         currentState <= S9;
                     end if;
@@ -92,10 +94,13 @@ begin
                     currentState <= S3;
 
                 when S3 =>
-                    if rt /= 0 then
-                        registerFile(TO_INTEGER(UNSIGNED(rt))) <= result;
+                    if decodedInstruction = ADDI and rt /= 0 then
+                        registerFile(TO_INTEGER(UNSIGNED(rt))) <= regA + regB;
+                        currentState <= S0;
+                    else -- default, for LW
+                        dataAddress  <= regA + regB;
+                        currentState <= S7;
                     end if;
-                    currentState <= S0;
 
                 when S4 =>
                     regB <= registerFile(TO_INTEGER(UNSIGNED(rt)));
@@ -103,8 +108,18 @@ begin
 
                 when S5 =>
                     if rd /= 0 then
-                        registerFile(TO_INTEGER(UNSIGNED(rd))) <= result;
+                        registerFile(TO_INTEGER(UNSIGNED(rd))) <= regA + regB;
                     end if;
+                    currentState <= S0;
+
+                when S6 =>
+                    if (registerFile(TO_INTEGER(UNSIGNED(rs))) - registerFile(TO_INTEGER(UNSIGNED(rt)))) = "000000" then
+                        pc <= "000000" & instructionRegister(25 downto 0);
+                    end if;
+                    currentState <= S0;
+
+                when S7 =>
+                    registerFile(TO_INTEGER(UNSIGNED(rt))) <= data_i;
                     currentState <= S0;
 
                 when S9 =>
@@ -144,8 +159,7 @@ begin
     report "******************* INVALID INSTRUCTION *************"
     severity error;
     
-    regA    <= registerFile(TO_INTEGER(UNSIGNED(rs))); -- RegA is always rs
-    result  <= regA + regB; -- Default, for R and I-type instructions
+    regA    <=  registerFile(TO_INTEGER(UNSIGNED(rs)));  -- RegA is always rs
     
     MemWrite <= '1' when decodedInstruction = SW else '0';
     
