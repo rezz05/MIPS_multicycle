@@ -81,9 +81,9 @@ begin
                 when S1 =>
                     if decodedInstruction = ADDI or decodedInstruction = LW then
                         currentState <= S2;
-                    elsif decodedInstruction = ADD then
+                    elsif decodedInstruction = ADD or decodedInstruction = SLT then
                         currentState <= S4;
-                    elsif decodedInstruction = BEQ then
+                    elsif decodedInstruction = BEQ or decodedInstruction = BNE then
                         currentState <= S6;
                     else
                         currentState <= S9;
@@ -107,8 +107,10 @@ begin
                     currentState <= S5;
 
                 when S5 =>
-                    if rd /= 0 then
+                    if decodedInstruction = ADD and rd /= 0 then
                         registerFile(TO_INTEGER(UNSIGNED(rd))) <= regA + regB;
+                    elsif decodedInstruction = SLT and rd /= 0 and signed(rs) < signed(rt) then
+                        registerFile(TO_INTEGER(UNSIGNED(rd))) <= (0 => '1', others=>'0');
                     end if;
                     currentState <= S0;
 
@@ -132,6 +134,7 @@ begin
     end process;
 
     instructionAddress <= pc;
+    regA    <=  registerFile(TO_INTEGER(UNSIGNED(rs)));  -- RegA is always rs
 
     rs      <= instructionRegister(25 downto 21);
     rt      <= instructionRegister(20 downto 16);
@@ -158,9 +161,7 @@ begin
     assert not (decodedInstruction = INVALID_INSTRUCTION and rst = '0')   
     report "******************* INVALID INSTRUCTION *************"
     severity error;
-    
-    regA    <=  registerFile(TO_INTEGER(UNSIGNED(rs)));  -- RegA is always rs
-    
+
     MemWrite <= '1' when decodedInstruction = SW else '0';
     
 end behavioral;
