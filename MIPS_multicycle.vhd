@@ -82,7 +82,7 @@ begin
                     if decodedInstruction = ADDI then
                         currentState <= S2;
                     elsif decodedInstruction = ADD then
-                        currentState <= S3;
+                        currentState <= S4;
                     else
                         currentState <= S9;
                     end if;
@@ -96,6 +96,17 @@ begin
                         registerFile(TO_INTEGER(UNSIGNED(rt))) <= result;
                     end if;
                     currentState <= S0;
+
+                when S4 =>
+                    regB <= registerFile(TO_INTEGER(UNSIGNED(rt)));
+                    currentState <= S5;
+
+                when S5 =>
+                    if rd /= 0 then
+                        registerFile(TO_INTEGER(UNSIGNED(rd))) <= result;
+                    end if;
+                    currentState <= S0;
+
                 when S9 =>
                     currentState <= S0;
 
@@ -134,7 +145,7 @@ begin
     severity error;
     
     regA    <= registerFile(TO_INTEGER(UNSIGNED(rs))); -- RegA is always rs
-    result  <= regA + regB;
+    result  <= regA + regB; -- Default, for R and I-type instructions
     
     MemWrite <= '1' when decodedInstruction = SW else '0';
     
