@@ -13,12 +13,8 @@ entity MIPS_multicycle is
 	port ( 
 		clk, rst      		: in std_logic;
 		
-		-- Instruction memory interface
-		instructionAddress	: out std_logic_vector(31 downto 0);
-		instruction			: in  std_logic_vector(31 downto 0);
-		
 		-- Data memory interface
-		dataAddress 		: out std_logic_vector(31 downto 0);
+		memAddress    		: out std_logic_vector(31 downto 0);
 		data_i				: in  std_logic_vector(31 downto 0);      
         data_o				: out std_logic_vector(31 downto 0);
         MemWrite			: out std_logic 
@@ -52,6 +48,8 @@ architecture behavioral of MIPS_multicycle is
 	
 	-- ALU zero flag
     signal zero : std_logic;
+
+    signal r_Address : std_logic_vector(31 downto 0);
      
     -- Alias to identify the instructions based on the 'opcode' and 'funct' fields
 	signal  opcode     : std_logic_vector(5 downto 0);
@@ -66,6 +64,7 @@ begin
         if rst = '1' then
             pc <= (others=>'0');
             currentState <= S0;
+            r_Address <= (others=>'0');
             for i in 0 to 31 loop   
                 registerFile(i) <= (others=>'0');  
             end loop;
@@ -74,7 +73,7 @@ begin
             case currentState is
                 when S0 =>
                     pc <= pc + 4;
-                    instructionRegister <= instruction;
+                    instructionRegister <= data_i;
 
                     currentState <= S1;
 
@@ -90,7 +89,11 @@ begin
                     end if;
 
                 when S2 =>
-                    regB <= x"0000" & IMM;
+                    if IMM(15) = '1' then
+                        regB <= x"FFFF" & IMM;
+                    else
+                        regB <= x"0000" & IMM;
+                    end if;
                     currentState <= S3;
 
                 when S3 =>
@@ -98,7 +101,7 @@ begin
                         registerFile(TO_INTEGER(UNSIGNED(rt))) <= regA + regB;
                         currentState <= S0;
                     else -- default, for LW
-                        dataAddress  <= regA + regB;
+                        r_Address  <= regA + regB;
                         currentState <= S7;
                     end if;
 
@@ -116,9 +119,9 @@ begin
 
                 when S6 =>
                     if decodedInstruction = BEQ and (registerFile(TO_INTEGER(UNSIGNED(rs))) - registerFile(TO_INTEGER(UNSIGNED(rt)))) = "000000" then
-                        pc <= "000000" & instructionRegister(25 downto 0);
+                        pc <= pc + (x"0000" & instructionRegister(15 downto 0));
                     elsif decodedInstruction = BNE and (registerFile(TO_INTEGER(UNSIGNED(rs))) - registerFile(TO_INTEGER(UNSIGNED(rt)))) /= "000000" then
-                        pc <= "000000" & instructionRegister(25 downto 0);
+                        pc <= pc + (x"0000" & instructionRegister(15 downto 0));
                     end if;
                     currentState <= S0;
 
@@ -135,7 +138,6 @@ begin
         end if;
     end process;
 
-    instructionAddress <= pc;
     regA    <=  registerFile(TO_INTEGER(UNSIGNED(rs)));  -- RegA is always rs
 
     rs      <= instructionRegister(25 downto 21);
@@ -160,6 +162,7 @@ begin
     report "******************* INVALID INSTRUCTION *************"
     severity error;
 
+    memAddress <= pc when currentState = S0 else r_Address;
     MemWrite <= '1' when decodedInstruction = SW else '0';
     
 end behavioral;
