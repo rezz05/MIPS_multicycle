@@ -20,7 +20,7 @@ Vb?XemlXUA>G0oDOK3mjBS3
 Z10 OV;C;10.1e;51
 32
 !i10b 1
-Z11 !s108 1417290566.149000
+Z11 !s108 1417316261.392000
 Z12 !s90 -reportprogress|300|MIPS_multicycle.vhd|MIPS_multicycle_tb.vhd|MIPS_package.vhd|Memory.vhd|RegisterFile.vhd|RegisterNbits.vhd|Util_package.vhd|
 Z13 !s107 Util_package.vhd|RegisterNbits.vhd|RegisterFile.vhd|Memory.vhd|MIPS_package.vhd|MIPS_multicycle_tb.vhd|MIPS_multicycle.vhd|
 o-O0
@@ -68,7 +68,7 @@ R14
 !s90 -reportprogress|300|MIPS_monocycle.vhd|
 !s107 MIPS_monocycle.vhd|
 Emips_multicycle
-Z20 w1417290157
+Z20 w1417316260
 Z21 DPx4 work 12 mips_package 0 22 KfR^V=Wa7AX<Y50o>WKkH0
 R18
 R3
@@ -80,8 +80,8 @@ Z22 8MIPS_multicycle.vhd
 Z23 FMIPS_multicycle.vhd
 l0
 L12
-VeK2j`QmgDZF;cGdfSMDE;1
-!s100 ZR5UzSg@9S@3VUc]_e6QZ3
+VIIAnQBGGlL^Jl^fD:=2Pc3
+!s100 OYQ69;zJ:EC_=KX[4AU9V2
 R10
 32
 !i10b 1
@@ -97,11 +97,11 @@ R3
 R4
 R5
 R6
-Z24 DEx4 work 15 mips_multicycle 0 22 eK2j`QmgDZF;cGdfSMDE;1
-l60
+Z24 DEx4 work 15 mips_multicycle 0 22 IIAnQBGGlL^Jl^fD:=2Pc3
+l62
 L28
-Vil4`GmT=H7<9BW;Cc9;9X3
-!s100 fA6=;C9Imjm^1cYEJOYC02
+VenfCgOjeUd@oVFQJ<`Zk:3
+!s100 ggK6J1m>jXC9O9@BJOm_R3
 R10
 32
 !i10b 1
@@ -111,7 +111,7 @@ R13
 o-O0
 R14
 Emips_multicycle_tb
-Z25 w1417284961
+Z25 w1417314904
 R21
 R5
 R6
@@ -143,8 +143,8 @@ R6
 Z28 DEx4 work 18 mips_multicycle_tb 0 22 UlIUf`lnQ9:eFQ[h^9[gY3
 l22
 L15
-Z29 VH7aT7KX`:aM9[TAX]3CBX3
-Z30 !s100 BkIY9a7DbFTgjJZ:?`H_m2
+Z29 VWck6ClM<=QWim3@n>G]EU3
+Z30 !s100 hX?[4aljcPZfAS6<[Ql;m2
 R10
 32
 !i10b 1

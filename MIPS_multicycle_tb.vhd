@@ -28,8 +28,8 @@ begin
 		
 	MIPS_MONOCYCLE: entity work.MIPS_multicycle(behavioral) 
 		port map (
-			clock				=> clock,
-			reset				=> reset,
+			clk				=> clock,
+			rst				=> reset,
 			
 			-- Instruction memory interface
 			instructionAddress	=> instructionAddress,	
