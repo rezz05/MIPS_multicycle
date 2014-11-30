@@ -23,7 +23,7 @@ end MIPS_multicycle;
 
 architecture behavioral of MIPS_multicycle is
 
-    signal pc, result   : std_logic_vector(31 downto 0);
+    signal pc : std_logic_vector(31 downto 0);
     signal RegWrite : std_logic;
     signal instructionRegister, regA, regB : std_logic_vector(31 downto 0);
 
@@ -45,9 +45,9 @@ architecture behavioral of MIPS_multicycle is
 
     -- Retrieves the IMM field for type-I instructions
     signal IMM: std_logic_vector(15 downto 0);
-	
-	-- ALU zero flag
-    signal zero : std_logic;
+
+    signal offsetBranch : std_logic_vector(31 downto 0);
+    signal offsetJump   : std_logic_vector(27 downto 0);
 
     signal r_Address : std_logic_vector(31 downto 0);
      
@@ -78,16 +78,16 @@ begin
                     currentState <= S1;
 
                 when S1 =>
-                    if decodedInstruction = ADDI or decodedInstruction = LW then
+                    if decodedInstruction = ADDI or decodedInstruction = LW or decodedInstruction = SW then
                         currentState <= S2;
-                    elsif decodedInstruction = ADD or decodedInstruction = SLT then
+                    elsif decodedInstruction = ADD or decodedInstruction = SLT or decodedInstruction = SLTU then
                         currentState <= S4;
                     elsif decodedInstruction = BEQ or decodedInstruction = BNE then
                         currentState <= S6;
                     elsif decodedInstruction = J then
                         currentState <= S8;
                     else
-                        currentState <= S9;
+                        currentState <= S0;
                     end if;
 
                 when S2 =>
@@ -99,11 +99,13 @@ begin
                     currentState <= S3;
 
                 when S3 =>
+                    r_Address  <= regA + regB;
                     if decodedInstruction = ADDI and rt /= 0 then
                         registerFile(TO_INTEGER(UNSIGNED(rt))) <= regA + regB;
                         currentState <= S0;
+                    elsif decodedInstruction = SW then
+                        currentState <= S9;
                     else -- default, for LW
-                        r_Address  <= regA + regB;
                         currentState <= S7;
                     end if;
 
@@ -114,16 +116,22 @@ begin
                 when S5 =>
                     if decodedInstruction = ADD and rd /= 0 then
                         registerFile(TO_INTEGER(UNSIGNED(rd))) <= regA + regB;
-                    elsif decodedInstruction = SLT and rd /= 0 and signed(rs) < signed(rt) then
-                        registerFile(TO_INTEGER(UNSIGNED(rd))) <= (0 => '1', others=>'0');
+                    else
+                        if decodedInstruction = SLT and rd /= 0 and signed(registerFile(TO_INTEGER(UNSIGNED(rs)))) < signed(registerFile(TO_INTEGER(UNSIGNED(rt)))) then
+                            registerFile(TO_INTEGER(UNSIGNED(rd))) <= x"00000001";
+                        elsif decodedInstruction = SLTU and rd /= 0 and registerFile(TO_INTEGER(UNSIGNED(rs))) < registerFile(TO_INTEGER(UNSIGNED(rt))) then
+                            registerFile(TO_INTEGER(UNSIGNED(rd))) <= x"00000001";
+                        else
+                            registerFile(TO_INTEGER(UNSIGNED(rd))) <= x"00000000";
+                        end if;
                     end if;
                     currentState <= S0;
 
                 when S6 =>
-                    if decodedInstruction = BEQ and (registerFile(TO_INTEGER(UNSIGNED(rs))) - registerFile(TO_INTEGER(UNSIGNED(rt)))) = "000000" then
-                        pc <= pc + (x"0000" & instructionRegister(15 downto 0));
-                    elsif decodedInstruction = BNE and (registerFile(TO_INTEGER(UNSIGNED(rs))) - registerFile(TO_INTEGER(UNSIGNED(rt)))) /= "000000" then
-                        pc <= pc + (x"0000" & instructionRegister(15 downto 0));
+                    if decodedInstruction = BEQ and (registerFile(TO_INTEGER(UNSIGNED(rs))) = registerFile(TO_INTEGER(UNSIGNED(rt)))) then
+                        pc <= pc + (offsetBranch(29 downto 0) & "00");
+                    elsif decodedInstruction = BNE and (registerFile(TO_INTEGER(UNSIGNED(rs))) /= registerFile(TO_INTEGER(UNSIGNED(rt)))) then
+                        pc <= pc + (offsetBranch(29 downto 0) & "00");
                     end if;
                     currentState <= S0;
 
@@ -132,9 +140,9 @@ begin
                     currentState <= S0;
 
                 when S8 =>
-                    pc <= "000000" & instructionRegister(25 downto 0);
+                    pc <= pc(31 downto 28) & offsetJump;
                     currentState <= S0;
-                    
+
                 when S9 =>
                     currentState <= S0;
 
@@ -153,6 +161,10 @@ begin
     opcode  <= instructionRegister(31 downto 26);
     funct   <= instructionRegister(5 downto 0);
 
+    offsetBranch <= (x"0000" & instructionRegister(15 downto 0));
+    offsetJump <= instructionRegister(25 downto 0) & "00";
+    data_o <= registerFile(TO_INTEGER(UNSIGNED(rt)));
+
     -- Instruction decoding
     decodedInstruction <=   ADD     when opcode = "000000" and funct = "100000" else
                             SLT     when opcode = "000000" and funct = "101010" else
@@ -168,7 +180,7 @@ begin
     report "******************* INVALID INSTRUCTION *************"
     severity error;
 
-    memAddress <= pc when currentState = S0 else r_Address;
-    MemWrite <= '1' when decodedInstruction = SW else '0';
+    memAddress <= r_Address when currentState = S7 or currentState = S9 else pc;
+    MemWrite <= '1' when currentState = S9 else '0';
     
 end behavioral;
